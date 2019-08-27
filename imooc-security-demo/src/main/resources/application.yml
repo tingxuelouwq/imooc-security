@@ -11,4 +11,8 @@ spring:
     host: localhost
     port: 6379
     password: tttx
+  security:
+    user:
+      name: kevin
+      password: tttx
 
