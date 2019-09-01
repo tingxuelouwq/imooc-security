@@ -2,6 +2,9 @@ package com.imooc.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import javax.validation.constraints.NotBlank;
+import java.util.Date;
+
 /**
  * 类名: User<br/>
  * 包名：com.imooc.dto<br/>
@@ -12,11 +15,25 @@ import com.fasterxml.jackson.annotation.JsonView;
  */
 public class User {
 
-    public interface UserSimpleView {}
-    public interface UserDetailView extends UserSimpleView {}
+    public interface UserSimpleView {
+    }
 
+    public interface UserDetailView extends UserSimpleView {
+    }
+
+    private String id;
     private String username;
+    @NotBlank
     private String password;
+
+    @JsonView(UserSimpleView.class)
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     @JsonView(UserSimpleView.class)
     public String getUsername() {
@@ -34,5 +51,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

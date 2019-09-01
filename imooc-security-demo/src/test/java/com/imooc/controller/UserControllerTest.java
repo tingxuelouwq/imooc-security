@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * 类名: UserControllerTest<br/>
@@ -71,11 +72,13 @@ public class UserControllerTest {
 
     @Test
     public void testCreateSuccess() throws Exception {
-        String content = "";
-        mockMvc.perform(MockMvcRequestBuilders.post("/user")
+        String content = "{\"username\":\"tom\",\"password\":null}";
+        String result = mockMvc.perform(MockMvcRequestBuilders.post("/user")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(content))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(result);
     }
 }
