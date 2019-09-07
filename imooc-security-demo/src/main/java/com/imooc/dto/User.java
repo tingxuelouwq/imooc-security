@@ -1,6 +1,7 @@
 package com.imooc.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.imooc.validator.MyConstraint;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
@@ -22,8 +23,11 @@ public class User {
     }
 
     private String id;
+
+    @MyConstraint(message = "这是一个测试")
     private String username;
-    @NotBlank
+
+    @NotBlank(message = "密码不能为空")
     private String password;
 
     @JsonView(UserSimpleView.class)
