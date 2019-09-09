@@ -52,12 +52,12 @@ public class UserController {
     }
 
     @PostMapping
-    public User create(@Valid @RequestBody User user, BindingResult errors) {
-        if (errors.hasErrors()) {
-            errors.getAllErrors().stream().forEach(error -> {
-                System.out.println(error.getDefaultMessage());
-            });
-        }
+    public User create(@Valid @RequestBody User user/*, BindingResult errors*/) {
+//        if (errors.hasErrors()) {
+//            errors.getAllErrors().stream().forEach(error -> {
+//                System.out.println(error.getDefaultMessage());
+//            });
+//        }
         System.out.println(user);
         user.setId("1");
         return user;
