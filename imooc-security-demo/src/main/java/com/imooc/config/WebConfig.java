@@ -1,6 +1,13 @@
 package com.imooc.config;
 
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import com.imooc.filter.TimeFilter;
+import com.imooc.interceptor.TimeInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @类名: WebConfig<br />
@@ -10,5 +17,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @版本：1.0<br/>
  * @描述：<br/>
  */
-public class WebConfig extends WebMvcConfigurerAdapter {
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Autowired
+    private TimeInterceptor timeInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(timeInterceptor);
+    }
+
+    @Bean
+    public FilterRegistrationBean timeFilter() {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(new TimeFilter());
+        registrationBean.addUrlPatterns("/*");
+        return registrationBean;
+    }
 }

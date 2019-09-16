@@ -1,7 +1,5 @@
 package com.imooc.filter;
 
-import org.springframework.stereotype.Component;
-
 import javax.servlet.*;
 import java.io.IOException;
 
@@ -13,7 +11,6 @@ import java.io.IOException;
  * @版本：1.0<br/>
  * @描述：<br/>
  */
-//@Component
 public class TimeFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
