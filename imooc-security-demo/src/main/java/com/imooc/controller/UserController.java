@@ -3,6 +3,7 @@ package com.imooc.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.imooc.dto.User;
 import com.imooc.dto.UserQueryCondition;
+import com.imooc.exception.UserNotExistException;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.springframework.data.domain.Pageable;
@@ -46,18 +47,14 @@ public class UserController {
     @GetMapping("/{id:\\d+}")
     @JsonView(User.UserDetailView.class)
     public User getInfo(@PathVariable String id) {
+        System.out.println("进入getInfo服务");
         User user = new User();
-        user.setUsername("kevin");
+        user.setUsername("tom");
         return user;
     }
 
     @PostMapping
-    public User create(@Valid @RequestBody User user/*, BindingResult errors*/) {
-//        if (errors.hasErrors()) {
-//            errors.getAllErrors().stream().forEach(error -> {
-//                System.out.println(error.getDefaultMessage());
-//            });
-//        }
+    public User create(@Valid @RequestBody User user) {
         System.out.println(user);
         user.setId("1");
         return user;
@@ -67,9 +64,6 @@ public class UserController {
     public User update(@Valid @RequestBody User user, BindingResult errors) {
         if (errors.hasErrors()) {
             errors.getAllErrors().stream().forEach(error -> {
-//                FieldError fieldError = (FieldError) error;
-//                String message = fieldError.getField() + " " + error.getDefaultMessage();
-//                System.out.println(message);
                 System.out.println(error.getDefaultMessage());
             });
         }
