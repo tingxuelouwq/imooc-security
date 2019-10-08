@@ -105,10 +105,10 @@ public class UserControllerTest {
 
     @Test
     public void whenUploadSuccess() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.multipart("/file")
+        String result = mockMvc.perform(MockMvcRequestBuilders.multipart("/file")
                 .file(new MockMultipartFile("file", "test.txt",
                         "multipart/form-data", "hello upload".getBytes("UTF-8"))))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-
+                .andReturn().getResponse().getContentAsString();
+        System.out.println(result);
     }
 }
