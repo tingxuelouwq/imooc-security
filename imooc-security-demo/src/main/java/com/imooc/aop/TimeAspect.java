@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
  * 版本：1.0<br/>
  * 描述：<br/>
  */
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class TimeAspect {
 
     @Around("execution(* com.imooc.controller.UserController.*(..))")
