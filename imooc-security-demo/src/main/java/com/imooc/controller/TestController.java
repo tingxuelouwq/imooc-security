@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import java.util.concurrent.Callable;
 
@@ -65,5 +66,18 @@ public class TestController {
         };
         logger.info("Controller执行结束！");
         return callable;
+    }
+
+    private DeferredResult<String> deferredResult = new DeferredResult<>();
+
+    @RequestMapping("/testDeferredResult")
+    public DeferredResult<String> testDeferredResult() {
+        return deferredResult;
+    }
+
+    @RequestMapping("/setDeferredResult")
+    public String setDeferredResult() {
+        deferredResult.setResult("Test result");
+        return "succeed";
     }
 }
