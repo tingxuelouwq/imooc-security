@@ -16,7 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * 描述：<br/>
  */
 @EnableAsync
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class})
+@SpringBootApplication/*(exclude = {SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class})*/
 @EnableSwagger2
 public class DemoApplication {
     public static void main(String[] args) {
