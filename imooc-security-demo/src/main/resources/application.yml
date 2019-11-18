@@ -15,3 +15,8 @@ spring:
     user:
       name: kevin
       password: tttx
+
+#imooc:
+#  security:
+#    browser:
+#      loginPage: /demo-signIn.html
