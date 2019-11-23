@@ -16,7 +16,8 @@ spring:
       name: kevin
       password: tttx
 
-#imooc:
-#  security:
-#    browser:
+imooc:
+  security:
+    browser:
 #      loginPage: /demo-signIn.html
+      loginType: REDIRECT
