@@ -3,6 +3,7 @@ package com.imooc.security.browser.config;
 import com.imooc.security.browser.authentication.ImoocAuthenticationFailureHandler;
 import com.imooc.security.browser.authentication.ImoocAuthenticationSuccessHandler;
 import com.imooc.security.core.properties.SecurityProperties;
+import com.imooc.security.core.validate.code.ValidateCodeFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * @类名: BrowserSecurityConfig<br />
@@ -33,8 +35,13 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
+        ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
+        validateCodeFilter.setAuthenticationFailureHandler(imoocAuthenticationFailureHandler);
+
 //        http.httpBasic()
-        http.formLogin()
+        http.addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+                .formLogin()
                 .loginPage("/authentication/require")
                 .loginProcessingUrl("/authentication/form")
                 .successHandler(imoocAuthenticationSuccessHandler)
@@ -42,7 +49,8 @@ public class BrowserSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/authentication/require",
-                        securityProperties.getBrowser().getLoginPage()).permitAll()
+                        securityProperties.getBrowser().getLoginPage(),
+                        "/code/image").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable();
