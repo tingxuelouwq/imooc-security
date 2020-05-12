@@ -5,8 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Random;
 
 public class ImageCodeGenerator implements ValidateCodeGenerator {
@@ -15,7 +19,7 @@ public class ImageCodeGenerator implements ValidateCodeGenerator {
     private SecurityProperties securityProperties;
 
     @Override
-    public ImageCode generate(ServletWebRequest request) {
+    public ImageCode generate(ServletWebRequest request) throws IOException {
         int width = ServletRequestUtils.getIntParameter(request.getRequest(), "width",
                 securityProperties.getCode().getImage().getLength());
         int height = ServletRequestUtils.getIntParameter(request.getRequest(), "height",

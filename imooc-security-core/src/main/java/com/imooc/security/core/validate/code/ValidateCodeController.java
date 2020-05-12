@@ -23,23 +23,18 @@ import java.io.IOException;
 @RestController
 public class ValidateCodeController {
 
-    public static final String SESSION_KEY_IMAGE_CODE = "SESSION_KEY_IMAGE_CODE";
-    public static final String SESSION_KEY_IMAGE_CODE_EXPIRE_TIME = "SESSION_KEY_IMAGE_CODE_EXPIRE_TIME";
+    public static final String SESSION_KEY = "SESSION_KEY_IMAGE_CODE";
 
     private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
 
     @Autowired
-    private ValidateCodeGenerator imageCodeGenrator;
+    private ValidateCodeGenerator imageCodeGenerator;
 
     @GetMapping("/code/image")
     public void createCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        ImageCode imageCode = imageCodeGenrator.generate(new ServletWebRequest(request));
-        sessionStrategy.setAttribute(new ServletWebRequest(request),
-                SESSION_KEY_IMAGE_CODE, imageCode.getCode());
-        sessionStrategy.setAttribute(new ServletWebRequest(request),
-                SESSION_KEY_IMAGE_CODE_EXPIRE_TIME, imageCode.getExpireTime());
+        ImageCode imageCode = imageCodeGenerator.generate(new ServletWebRequest(request));
+        sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY, imageCode);
         ImageIO.write(imageCode.getImage(), "JPEG", response.getOutputStream());
-
     }
 }

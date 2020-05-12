@@ -1,6 +1,7 @@
 package com.imooc.security.core.validate.code;
 
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -11,9 +12,11 @@ import java.time.LocalDateTime;
  * @版本：1.0<br/>
  * @描述：<br/>
  */
-public class ImageCode {
+public class ImageCode implements Serializable {
 
-    private BufferedImage image;
+    private static final long serialVersionUID = -133398810420215036L;
+
+    private transient BufferedImage image;
 
     private String code;
 
@@ -25,10 +28,8 @@ public class ImageCode {
         this.expireTime = LocalDateTime.now().plusSeconds(expireIn);
     }
 
-    public ImageCode(BufferedImage image, String code, LocalDateTime expireTime){
-        this.image = image;
-        this.code = code;
-        this.expireTime = expireTime;
+    public boolean isExpired() {
+        return LocalDateTime.now().isAfter(expireTime);
     }
 
     public BufferedImage getImage() {
