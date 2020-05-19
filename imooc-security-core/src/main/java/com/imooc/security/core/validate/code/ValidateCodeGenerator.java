@@ -6,5 +6,5 @@ import java.io.IOException;
 
 public interface ValidateCodeGenerator {
 
-    ImageCode generate(ServletWebRequest request) throws IOException;
+    ValidateCode generate(ServletWebRequest request) throws IOException;
 }

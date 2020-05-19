@@ -8,13 +8,14 @@ package com.imooc.security.core.properties;
  * @版本：1.0<br/>
  * @描述：<br/>
  */
-public class ImageCodeProperties {
+public class ImageCodeProperties extends SmsCodeProperties {
 
     private int width = 67;     // 图片验证码宽度
     private int height = 23;    // 图片验证码高度
-    private int length = 4;     // 图片验证码位数
-    private int expireIn = 60;  // 图片验证码过期时间
-    private String url;         // 拦截接口url,逗号分隔
+
+    public ImageCodeProperties() {
+        setLength(4);           // 图片验证码长度
+    }
 
     public int getWidth() {
         return width;
@@ -30,29 +31,5 @@ public class ImageCodeProperties {
 
     public void setHeight(int height) {
         this.height = height;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
-    }
-
-    public int getExpireIn() {
-        return expireIn;
-    }
-
-    public void setExpireIn(int expireIn) {
-        this.expireIn = expireIn;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 }
