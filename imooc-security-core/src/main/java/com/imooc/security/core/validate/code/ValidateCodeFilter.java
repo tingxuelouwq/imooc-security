@@ -1,20 +1,18 @@
 package com.imooc.security.core.validate.code;
 
 import com.imooc.security.core.properties.SecurityProperties;
+import com.imooc.security.core.validate.code.image.ImageCode;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;
-import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -81,7 +79,8 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     }
 
     private void validate(ServletWebRequest request) throws ServletRequestBindingException {
-        ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(request, SESSION_KEY);
+        ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(request,
+                ValidateCodeProcessor.SESSION_KEY_PREFIX + "IMAGE");
 
         String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "imageCode");
 
@@ -94,7 +93,8 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
         }
 
         if (codeInSession.isExpired()) {
-            sessionStrategy.removeAttribute(request, SESSION_KEY);
+            sessionStrategy.removeAttribute(request,
+                    ValidateCodeProcessor.SESSION_KEY_PREFIX + "IMAGE");
             throw new ValidateCodeException("验证码已过期");
         }
 
@@ -102,7 +102,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
             throw new ValidateCodeException("验证码不匹配");
         }
 
-        sessionStrategy.removeAttribute(request, SESSION_KEY);
+        sessionStrategy.removeAttribute(request, ValidateCodeProcessor.SESSION_KEY_PREFIX + "IMAGE");
     }
 
     public AuthenticationFailureHandler getAuthenticationFailureHandler() {
