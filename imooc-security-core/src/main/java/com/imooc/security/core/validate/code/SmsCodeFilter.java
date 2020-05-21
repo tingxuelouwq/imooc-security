@@ -1,7 +1,6 @@
 package com.imooc.security.core.validate.code;
 
 import com.imooc.security.core.properties.SecurityProperties;
-import com.imooc.security.core.validate.code.image.ImageCode;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
@@ -23,14 +22,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @类名: ValidateCodeFilter<br />
+ * @类名: SmsCodeFilter<br />
  * @包名：com.imooc.security.core.validate.code<br/>
  * @作者：kevin<br/>
  * @时间：2019/11/26 11:58<br/>
  * @版本：1.0<br/>
  * @描述：<br/>
  */
-public class ValidateCodeFilter extends OncePerRequestFilter implements InitializingBean {
+public class SmsCodeFilter extends OncePerRequestFilter implements InitializingBean {
 
     private AuthenticationFailureHandler authenticationFailureHandler;
 
@@ -46,13 +45,13 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     public void afterPropertiesSet() throws ServletException {
         super.afterPropertiesSet();
         String[] configUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(
-                securityProperties.getCode().getImage().getUrl(), ",");
+                securityProperties.getCode().getSms().getUrl(), ",");
         if (ArrayUtils.isNotEmpty(configUrls)) {
             for (String configUrl : configUrls) {
                 urls.add(configUrl);
             }
         }
-        urls.add("/authentication/form");
+        urls.add("/authentication/mobile");
     }
 
     @Override
@@ -80,10 +79,10 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
     }
 
     private void validate(ServletWebRequest request) throws ServletRequestBindingException {
-        ImageCode codeInSession = (ImageCode) sessionStrategy.getAttribute(request,
-                ValidateCodeProcessor.SESSION_KEY_PREFIX + "IMAGE");
+        ValidateCode codeInSession = (ValidateCode) sessionStrategy.getAttribute(request,
+                ValidateCodeProcessor.SESSION_KEY_PREFIX + "SMS");
 
-        String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "imageCode");
+        String codeInRequest = ServletRequestUtils.getStringParameter(request.getRequest(), "smsCode");
 
         if (StringUtils.isBlank(codeInRequest)) {
             throw new ValidateCodeException("验证码的值不能为空");
@@ -95,7 +94,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
 
         if (codeInSession.isExpired()) {
             sessionStrategy.removeAttribute(request,
-                    ValidateCodeProcessor.SESSION_KEY_PREFIX + "IMAGE");
+                    ValidateCodeProcessor.SESSION_KEY_PREFIX + "SMS");
             throw new ValidateCodeException("验证码已过期");
         }
 
@@ -103,7 +102,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
             throw new ValidateCodeException("验证码不匹配");
         }
 
-        sessionStrategy.removeAttribute(request, ValidateCodeProcessor.SESSION_KEY_PREFIX + "IMAGE");
+        sessionStrategy.removeAttribute(request, ValidateCodeProcessor.SESSION_KEY_PREFIX + "SMS");
     }
 
     public AuthenticationFailureHandler getAuthenticationFailureHandler() {
