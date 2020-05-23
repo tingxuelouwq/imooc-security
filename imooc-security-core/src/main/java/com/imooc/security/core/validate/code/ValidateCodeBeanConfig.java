@@ -25,7 +25,7 @@ public class ValidateCodeBeanConfig {
 
     @Bean
     @ConditionalOnMissingBean(SmsCodeSender.class)
-    public SmsCodeSender smsCodeSender() {
+    public SmsCodeSender SmsCodeSender() {
         return new DefaultSmsCodeSender();
     }
 }

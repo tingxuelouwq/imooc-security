@@ -17,10 +17,10 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 public class MainConfiguration {
     @Bean
     public TaskExecutor myTaskExecutor() {
-        ThreadPoolTaskExecutor taskExecutor = new ThreadPoolTaskExecutor();
-        taskExecutor.setCorePoolSize(5);
-        taskExecutor.setMaxPoolSize(10);
-        taskExecutor.setQueueCapacity(20);
-        return taskExecutor;
+        ThreadPoolTaskExecutor myTaskExecutor = new ThreadPoolTaskExecutor();
+        myTaskExecutor.setCorePoolSize(5);
+        myTaskExecutor.setMaxPoolSize(10);
+        myTaskExecutor.setQueueCapacity(20);
+        return myTaskExecutor;
     }
 }

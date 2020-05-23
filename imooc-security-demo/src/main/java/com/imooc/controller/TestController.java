@@ -33,12 +33,12 @@ public class TestController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private TaskExecutor taskExecutor;
+    private TaskExecutor myTaskExecutor;
 
     @RequestMapping("/testTaskExecutor")
     public String testTaskExecutor() {
         logger.info("TestTaskExecutor function begin to execute!");
-        taskExecutor.execute(() -> {
+        myTaskExecutor.execute(() -> {
             logger.info("Real thread begin to execute!");
             try {
                 Thread.sleep(5000);

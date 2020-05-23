@@ -17,8 +17,8 @@ import javax.imageio.ImageIO;
 @Component
 public class ImageCodeProcessor extends AbstractValidateCodeProcessor<ImageCode> {
     @Override
-    protected void send(ServletWebRequest request, ImageCode imageCode) throws Exception {
-        ImageIO.write(imageCode.getImage(), "JPEG",
+    protected void send(ServletWebRequest request, ImageCode ImageCode) throws Exception {
+        ImageIO.write(ImageCode.getImage(), "JPEG",
                 request.getResponse().getOutputStream());
     }
 }
