@@ -4,10 +4,9 @@ import com.imooc.security.core.properties.SecurityConstants;
 import com.imooc.security.core.validate.code.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.social.connect.web.HttpSessionSessionStrategy;
-import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.ServletWebRequest;
 
 import java.util.Map;
@@ -22,8 +21,6 @@ import java.util.Map;
  */
 public abstract class AbstractValidateCodeProcessor<C extends ValidateCode>
         implements ValidateCodeProcessor {
-
-    private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
 
     /**
      * 收集系统中所有的{@link ValidateCodeGenerator}接口的实现
@@ -52,7 +49,7 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode>
      * @param validateCode
      */
     private void save(ServletWebRequest request, C validateCode) {
-        sessionStrategy.setAttribute(request, getSessionKey(request), validateCode);
+        request.setAttribute(getSessionKey(request), validateCode, RequestAttributes.SCOPE_SESSION);
     }
 
     /**
@@ -93,7 +90,7 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode>
     @Override
     public void validate(ServletWebRequest request) {
         String sessionKey = getSessionKey(request);
-        C codeInSession = (C) sessionStrategy.getAttribute(request, sessionKey);
+        C codeInSession = (C) request.getAttribute(sessionKey, RequestAttributes.SCOPE_SESSION);
 
         ValidateCodeType type = getValidateCodeType(request);
         String codeInRequest;
@@ -113,7 +110,7 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode>
         }
 
         if (codeInSession.isExpired()) {
-            sessionStrategy.removeAttribute(request, sessionKey);
+            request.removeAttribute(sessionKey, RequestAttributes.SCOPE_SESSION);
             throw new ValidateCodeException(type + "验证码已过期");
         }
 
@@ -121,6 +118,6 @@ public abstract class AbstractValidateCodeProcessor<C extends ValidateCode>
             throw new ValidateCodeException(type + "验证码不匹配");
         }
 
-        sessionStrategy.removeAttribute(request, sessionKey);
+        request.removeAttribute(sessionKey, RequestAttributes.SCOPE_SESSION);
     }
 }
