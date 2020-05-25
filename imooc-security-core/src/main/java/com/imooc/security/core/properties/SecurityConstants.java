@@ -27,6 +27,10 @@ public class SecurityConstants {
      */
     public static final String DEFAULT_LOGIN_PROCESSING_URL_MOBILE = "/authentication/mobile";
     /**
+     * 默认的QQ登录请求处理url
+     */
+    public static final String DEFAULT_LOGIN_PROCESSING_URL_QQ = "/login/qq";
+    /**
      * 默认的登录页面
      */
     public static final String DEFAULT_LOGIN_PAGE_URL = "/imooc-signIn.html";
