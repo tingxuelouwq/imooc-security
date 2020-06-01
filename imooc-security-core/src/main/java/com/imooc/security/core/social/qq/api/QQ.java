@@ -1,7 +1,5 @@
 package com.imooc.security.core.social.qq.api;
 
-import java.io.IOException;
-
 /**
  * @类名: QQ<br />
  * @包名：com.imooc.security.core.social.qq.api<br/>
@@ -12,5 +10,5 @@ import java.io.IOException;
  */
 public interface QQ {
 
-    QQUserInfo getUserInfo() throws IOException;
+    QQUserInfo getUserInfo();
 }

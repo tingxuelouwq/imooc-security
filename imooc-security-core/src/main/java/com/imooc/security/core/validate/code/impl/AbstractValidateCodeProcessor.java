@@ -2,7 +2,7 @@ package com.imooc.security.core.validate.code.impl;
 
 import com.imooc.security.core.properties.SecurityConstants;
 import com.imooc.security.core.validate.code.*;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.web.HttpSessionSessionStrategy;
 import org.springframework.social.connect.web.SessionStrategy;

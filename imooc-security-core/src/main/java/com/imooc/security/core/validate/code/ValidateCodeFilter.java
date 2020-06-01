@@ -2,7 +2,7 @@ package com.imooc.security.core.validate.code;
 
 import com.imooc.security.core.properties.SecurityConstants;
 import com.imooc.security.core.properties.SecurityProperties;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -76,7 +76,7 @@ public class ValidateCodeFilter extends OncePerRequestFilter implements Initiali
      * @param type
      */
     private void addUrlToMap(String urlString, ValidateCodeType type) {
-        if (StringUtils.isNoneBlank(urlString)) {
+        if (StringUtils.isNotBlank(urlString)) {
             String[] configUrls = StringUtils.splitByWholeSeparatorPreserveAllTokens(urlString, ",");
             for (String configUrl : configUrls) {
                 urlMap.put(configUrl, type);

@@ -1,7 +1,7 @@
 package com.imooc.security.core.social.qq.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.social.oauth2.AbstractOAuth2ApiBinding;
@@ -42,10 +42,14 @@ public class QQImpl extends AbstractOAuth2ApiBinding implements QQ {
     }
 
     @Override
-    public QQUserInfo getUserInfo() throws IOException {
+    public QQUserInfo getUserInfo() {
         String url = String.format(URL_GET_USERINFO, appId, openId);
         String result = getRestTemplate().getForObject(url, String.class);
         logger.info("===>userInfo: {}", result);
-        return objectMapper.readValue(result, QQUserInfo.class);
+        try {
+            return objectMapper.readValue(result, QQUserInfo.class);
+        } catch (IOException e) {
+            throw new RuntimeException("获取用户信息失败", e);
+        }
     }
 }

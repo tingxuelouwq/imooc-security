@@ -1,6 +1,5 @@
 package com.imooc.interceptor;
 
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -32,15 +31,15 @@ public class TimeInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-                            @Nullable ModelAndView modelAndView) throws Exception {
+                            ModelAndView modelAndView) throws Exception {
         System.out.println("postHandler");
         long start = (long) request.getAttribute("startTime");
         System.out.println("time interceptor耗时: " + (System.currentTimeMillis() - start));
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
-                                 @Nullable Exception ex) throws Exception {
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
+            throws Exception {
         System.out.println("afterCompletion");
         long start = (long) request.getAttribute("startTime");
         System.out.println("time interceptor耗时: " + (System.currentTimeMillis() - start));
