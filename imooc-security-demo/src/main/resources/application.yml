@@ -20,6 +20,14 @@ spring:
 
 imooc:
   security:
+    browser:
+      #      loginPage: /demo-signIn.html
+      loginType: JSON
+      code:
+        image:
+          length: 6
+          width: 100
+          url: /user,/user/*
     social:
       qq:
         app-id: 101364240
