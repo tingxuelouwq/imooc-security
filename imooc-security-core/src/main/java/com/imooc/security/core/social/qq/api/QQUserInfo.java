@@ -31,6 +31,10 @@ public class QQUserInfo {
      */
     private String year;
     /**
+     * 星座
+     */
+    private String constellation;
+    /**
      * 用户在QQ空间的昵称。
      */
     private String nickname;
@@ -55,9 +59,21 @@ public class QQUserInfo {
      */
     private String figureurl_qq_2;
     /**
+     * 大小为140×140像素的QQ头像URL。需要注意，不是所有的用户都拥有QQ的140×140的头像，但40×40像素则是一定会有。
+     */
+    private String figureurl_qq;
+    /**
+     * 头像类型
+     */
+    private String figureurl_type;
+    /**
      * 性别。 如果获取不到则默认返回”男”
      */
     private String gender;
+    /**
+     * 性别类型，1:男生
+     */
+    private int gender_type;
     /**
      * 标识用户是否为黄钻用户（0：不是；1：是）。
      */
@@ -78,7 +94,6 @@ public class QQUserInfo {
      * 标识是否为年费黄钻用户（0：不是； 1：是）
      */
     private String is_yellow_year_vip;
-
 
     public String getRet() {
         return ret;
@@ -136,6 +151,14 @@ public class QQUserInfo {
         this.year = year;
     }
 
+    public String getConstellation() {
+        return constellation;
+    }
+
+    public void setConstellation(String constellation) {
+        this.constellation = constellation;
+    }
+
     public String getNickname() {
         return nickname;
     }
@@ -184,12 +207,36 @@ public class QQUserInfo {
         this.figureurl_qq_2 = figureurl_qq_2;
     }
 
+    public String getFigureurl_qq() {
+        return figureurl_qq;
+    }
+
+    public void setFigureurl_qq(String figureurl_qq) {
+        this.figureurl_qq = figureurl_qq;
+    }
+
+    public String getFigureurl_type() {
+        return figureurl_type;
+    }
+
+    public void setFigureurl_type(String figureurl_type) {
+        this.figureurl_type = figureurl_type;
+    }
+
     public String getGender() {
         return gender;
     }
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public int getGender_type() {
+        return gender_type;
+    }
+
+    public void setGender_type(int gender_type) {
+        this.gender_type = gender_type;
     }
 
     public String getIs_yellow_vip() {
