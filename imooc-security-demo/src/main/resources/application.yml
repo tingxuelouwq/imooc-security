@@ -28,6 +28,7 @@ imooc:
           length: 6
           width: 100
           url: /user,/user/*
+      signUpUrl: /demo-signUp.html
     social:
       qq:
         app-id: 101364240

@@ -63,7 +63,8 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                 .antMatchers(
                         SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
                         securityProperties.getBrowser().getLoginPage(),
-                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*")
+                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
+                        securityProperties.getBrowser().getSignUpUrl())
                 .permitAll()
                 .anyRequest()
                 .authenticated()
