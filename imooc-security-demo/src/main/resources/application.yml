@@ -34,4 +34,7 @@ imooc:
         app-id: 101364240
         app-secret: ef27b7a6ca651a3609dd47f21e385955
         providerId: qq
+      weixin:
+        app-id: wxd99431bbff8305a0
+        app-secret: 60f78681d063590a469f1b297feff3c4
       filterProcessingUrl: /login

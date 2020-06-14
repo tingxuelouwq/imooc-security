@@ -1,7 +1,6 @@
 package com.imooc.security.core.social;
 
 import com.imooc.security.core.properties.SecurityProperties;
-import com.imooc.security.core.social.qq.ImoocSpringSocialConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
