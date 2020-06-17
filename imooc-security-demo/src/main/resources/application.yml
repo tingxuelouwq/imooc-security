@@ -31,10 +31,10 @@ imooc:
       signUpUrl: /demo-signUp.html
     social:
       qq:
-        app-id: 101364240
-        app-secret: ef27b7a6ca651a3609dd47f21e385955
-        providerId: qq
+        app-id: 100550231
+        app-secret: 69b6ab57b22f3c2fe6a6149274e3295e
+        providerId: callback.do
       weixin:
         app-id: wxd99431bbff8305a0
         app-secret: 60f78681d063590a469f1b297feff3c4
-      filterProcessingUrl: /login
+      filterProcessingUrl: /qqLogin

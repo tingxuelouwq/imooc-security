@@ -1,5 +1,7 @@
 package com.imooc.security.core.properties;
 
+import org.springframework.boot.autoconfigure.social.SocialProperties;
+
 /**
  * kevin<br/>
  * 2020/6/13 22:20<br/>

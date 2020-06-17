@@ -37,6 +37,21 @@ public class WeixinOAuth2Template extends OAuth2Template {
 		this.clientSecret = clientSecret;
 		this.accessTokenUrl = accessTokenUrl;
 	}
+
+	@Override
+	public String buildAuthorizeUrl(OAuth2Parameters parameters) {
+		return buildAuthenticateUrl(parameters);
+	}
+
+	/**
+	 * 构建获取授权码的请求。也就是引导用户跳转到微信的地址。
+	 */
+	@Override
+	public String buildAuthenticateUrl(OAuth2Parameters parameters) {
+		String url = super.buildAuthenticateUrl(parameters);
+		url = url + "&appid="+clientId+"&scope=snsapi_login";
+		return url;
+	}
 	
 	@Override
 	public AccessGrant exchangeForAccess(String authorizationCode, String redirectUri,
@@ -52,7 +67,8 @@ public class WeixinOAuth2Template extends OAuth2Template {
 		
 		return getAccessToken(accessTokenRequestUrl);
 	}
-	
+
+	@Override
 	public AccessGrant refreshAccess(String refreshToken, MultiValueMap<String, String> additionalParameters) {
 		
 		StringBuilder refreshTokenUrl = new StringBuilder(REFRESH_TOKEN_URL);
@@ -97,20 +113,7 @@ public class WeixinOAuth2Template extends OAuth2Template {
 		
 		return accessToken;
 	}
-	
-	/**
-	 * 构建获取授权码的请求。也就是引导用户跳转到微信的地址。
-	 */
-	public String buildAuthenticateUrl(OAuth2Parameters parameters) {
-		String url = super.buildAuthenticateUrl(parameters);
-		url = url + "&appid="+clientId+"&scope=snsapi_login";
-		return url;
-	}
-	
-	public String buildAuthorizeUrl(OAuth2Parameters parameters) {
-		return buildAuthenticateUrl(parameters);
-	}
-	
+
 	/**
 	 * 微信返回的contentType是html/text，添加相应的HttpMessageConverter来处理。
 	 */
@@ -120,5 +123,4 @@ public class WeixinOAuth2Template extends OAuth2Template {
 		restTemplate.getMessageConverters().add(new StringHttpMessageConverter(Charset.forName("UTF-8")));
 		return restTemplate;
 	}
-
 }
