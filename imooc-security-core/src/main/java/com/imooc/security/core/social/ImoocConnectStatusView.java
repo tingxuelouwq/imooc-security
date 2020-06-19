@@ -17,7 +17,7 @@ import java.util.Map;
  * 2020/6/17 21:28<br/>
  */
 @Component("connect/status")
-public class ImoocStatusView extends AbstractView {
+public class ImoocConnectStatusView extends AbstractView {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
