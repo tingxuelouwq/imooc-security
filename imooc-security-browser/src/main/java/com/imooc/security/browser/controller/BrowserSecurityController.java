@@ -50,6 +50,7 @@ public class BrowserSecurityController {
 
     /**
      * 当需要身份认证时，跳转到这里
+     *
      * @param request
      * @param response
      * @return
@@ -79,5 +80,12 @@ public class BrowserSecurityController {
         userInfo.setNickname(connection.getDisplayName());
         userInfo.setHeadimg(connection.getImageUrl());
         return userInfo;
+    }
+
+    @GetMapping("/session/invalid")
+    @ResponseStatus(code = HttpStatus.UNAUTHORIZED)
+    public SimpleResponse sessionInvalid() {
+        String message = "session失效";
+        return new SimpleResponse(message);
     }
 }

@@ -59,13 +59,16 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                 .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
                 .userDetailsService(userDetailsService)
                 .and()
+                .sessionManagement()
+                .invalidSessionUrl("/session/invalid")
+                .and()
                 .authorizeRequests()
                 .antMatchers(
                         SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
                         securityProperties.getBrowser().getLoginPage(),
-                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX+"/*",
+                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
                         securityProperties.getBrowser().getSignUpUrl(),
-                        "/user/regist")
+                        "/user/regist","/session/invalid")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
