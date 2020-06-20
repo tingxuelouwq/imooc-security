@@ -1,5 +1,6 @@
 package com.imooc.security.browser.config;
 
+import com.imooc.security.browser.session.ImoocExpiredSessionStrategy;
 import com.imooc.security.core.authentication.AbstractChannelSecurityConfig;
 import com.imooc.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.imooc.security.core.properties.SecurityConstants;
@@ -61,6 +62,10 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                 .and()
                 .sessionManagement()
                 .invalidSessionUrl("/session/invalid")
+                .maximumSessions(1)
+                .maxSessionsPreventsLogin(true)
+                .expiredSessionStrategy(new ImoocExpiredSessionStrategy())
+                .and()
                 .and()
                 .authorizeRequests()
                 .antMatchers(
