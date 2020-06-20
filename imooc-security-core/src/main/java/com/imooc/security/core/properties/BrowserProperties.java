@@ -10,7 +10,9 @@ package com.imooc.security.core.properties;
  */
 public class BrowserProperties {
 
-    private String signUpUrl = "/imooc-signUp.html";
+    private SessionProperties session = new SessionProperties();
+
+    private String signUpUrl = SecurityConstants.DEFAULT_SIGNUP_PAGE_URL;
 
     private String loginPage = SecurityConstants.DEFAULT_LOGIN_PAGE_URL;
 
@@ -48,5 +50,13 @@ public class BrowserProperties {
 
     public void setSignUpUrl(String signUpUrl) {
         this.signUpUrl = signUpUrl;
+    }
+
+    public SessionProperties getSession() {
+        return session;
+    }
+
+    public void setSession(SessionProperties session) {
+        this.session = session;
     }
 }

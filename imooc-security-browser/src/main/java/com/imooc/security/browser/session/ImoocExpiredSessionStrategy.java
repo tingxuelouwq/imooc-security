@@ -6,15 +6,21 @@ import org.springframework.security.web.session.SessionInformationExpiredStrateg
 import javax.servlet.ServletException;
 import java.io.IOException;
 
-/**
- * kevin<br/>
- * 2020/6/20 10:00<br/>
- */
-public class ImoocExpiredSessionStrategy implements SessionInformationExpiredStrategy {
-    @Override
-    public void onExpiredSessionDetected(SessionInformationExpiredEvent event)
-            throws IOException, ServletException {
-        event.getResponse().setContentType("application/json;charset=UTF-8");
-        event.getResponse().getWriter().write("并发登录!");
-    }
+public class ImoocExpiredSessionStrategy extends AbstractSessionStrategy
+		implements SessionInformationExpiredStrategy {
+
+	public ImoocExpiredSessionStrategy(String invalidSessionUrl) {
+		super(invalidSessionUrl);
+	}
+
+	@Override
+	public void onExpiredSessionDetected(SessionInformationExpiredEvent event)
+			throws IOException, ServletException {
+		onSessionInvalid(event.getRequest(), event.getResponse());
+	}
+	
+	@Override
+	protected boolean isConcurrency() {
+		return true;
+	}
 }

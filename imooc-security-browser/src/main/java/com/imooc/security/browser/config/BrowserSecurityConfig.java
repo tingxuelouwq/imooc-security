@@ -1,6 +1,5 @@
 package com.imooc.security.browser.config;
 
-import com.imooc.security.browser.session.ImoocExpiredSessionStrategy;
 import com.imooc.security.core.authentication.AbstractChannelSecurityConfig;
 import com.imooc.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.imooc.security.core.properties.SecurityConstants;
@@ -15,6 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.session.InvalidSessionStrategy;
+import org.springframework.security.web.session.SessionInformationExpiredStrategy;
 import org.springframework.social.security.SpringSocialConfigurer;
 
 import javax.sql.DataSource;
@@ -44,6 +45,12 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     @Autowired
     private SpringSocialConfigurer imoocSocialSecurityConfig;
 
+    @Autowired
+    private SessionInformationExpiredStrategy sessionInformationExpiredStrategy;
+
+    @Autowired
+    private InvalidSessionStrategy invalidSessionStrategy;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -51,35 +58,35 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
 
         http.apply(validateCodeSecurityConfig)
                 .and()
-                .apply(smsCodeAuthenticationSecurityConfig)
+             .apply(smsCodeAuthenticationSecurityConfig)
                 .and()
-                .apply(imoocSocialSecurityConfig)
+             .apply(imoocSocialSecurityConfig)
                 .and()
-                .rememberMe()
+            .rememberMe()
                 .tokenRepository(persistentTokenRepository())
                 .tokenValiditySeconds(securityProperties.getBrowser().getRememberMeSeconds())
                 .userDetailsService(userDetailsService)
                 .and()
-                .sessionManagement()
-                .invalidSessionUrl("/session/invalid")
-                .maximumSessions(1)
-                .maxSessionsPreventsLogin(true)
-                .expiredSessionStrategy(new ImoocExpiredSessionStrategy())
+            .sessionManagement()
+                .invalidSessionStrategy(invalidSessionStrategy)
+                .maximumSessions(securityProperties.getBrowser().getSession().getMaximumSessions())
+                .maxSessionsPreventsLogin(securityProperties.getBrowser().getSession().isMaxSessionsPreventsLogin())
+                .expiredSessionStrategy(sessionInformationExpiredStrategy)
                 .and()
                 .and()
-                .authorizeRequests()
+            .authorizeRequests()
                 .antMatchers(
-                        SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
-                        securityProperties.getBrowser().getLoginPage(),
-                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
-                        securityProperties.getBrowser().getSignUpUrl(),
-                        "/user/regist","/session/invalid")
-                .permitAll()
+                    SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
+                    securityProperties.getBrowser().getLoginPage(),
+                    SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
+                    securityProperties.getBrowser().getSignUpUrl(),
+                    securityProperties.getBrowser().getSession().getSessionInvalidUrl(),
+                    "/user/regist")
+                    .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
-                .csrf().disable();
-
+            .csrf().disable();
     }
 
     @Bean

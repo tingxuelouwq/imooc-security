@@ -50,4 +50,16 @@ public class SecurityConstants {
      * 验证码处理器后缀名
      */
     public static final String DEFAULT_CODE_PROCESSOR_SUFFIX = "CodeProcessor";
+    /**
+     * 默认的注册页面
+     */
+    public static final String DEFAULT_SIGNUP_PAGE_URL = "/imooc-signUp.html";
+    /**
+     * session默认的最大并发数
+     */
+    public static final int DEFAULT_MAXIMUM_SESSIONS = 1;
+    /**
+     * session失效默认的跳转地址
+     */
+    public static final String DEFAULT_SESSION_INVALID_URL = "/imooc-session-invalid.html";
 }
