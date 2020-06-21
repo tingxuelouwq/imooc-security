@@ -1,8 +1,7 @@
 server:
   port: 8060
   session:
-    timeout: 600
-
+    timeout: 3600
 
 spring:
   datasource:
@@ -11,7 +10,7 @@ spring:
     username: root
     password: tttx
   session:
-    store-type: none
+    store-type: redis
   redis:
     host: localhost
     port: 6379
@@ -24,7 +23,7 @@ spring:
 imooc:
   security:
     browser:
-      #      loginPage: /demo-signIn.html
+#      loginPage: /demo-signIn.html
       loginType: JSON
       code:
         image:
