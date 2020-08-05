@@ -10,6 +10,8 @@ package com.imooc.security.core.properties;
  */
 public class BrowserProperties {
 
+    private String signOutUrl;
+
     private SessionProperties session = new SessionProperties();
 
     private String signUpUrl = SecurityConstants.DEFAULT_SIGNUP_PAGE_URL;
@@ -58,5 +60,13 @@ public class BrowserProperties {
 
     public void setSession(SessionProperties session) {
         this.session = session;
+    }
+
+    public String getSignOutUrl() {
+        return signOutUrl;
+    }
+
+    public void setSignOutUrl(String signOutUrl) {
+        this.signOutUrl = signOutUrl;
     }
 }

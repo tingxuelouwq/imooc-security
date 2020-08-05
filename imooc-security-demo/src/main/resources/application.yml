@@ -1,5 +1,5 @@
 server:
-  port: 8060
+  port: 8040
   session:
     timeout: 600
 
@@ -32,6 +32,7 @@ imooc:
           width: 100
           url: /user,/user/*
       signUpUrl: /demo-signUp.html
+      signOutUrl: /demo-logout.html
     social:
       qq:
         app-id: 100550231
