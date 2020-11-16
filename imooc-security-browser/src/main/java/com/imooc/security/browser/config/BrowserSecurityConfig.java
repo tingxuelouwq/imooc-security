@@ -19,10 +19,6 @@ import org.springframework.social.security.SpringSocialConfigurer;
 
 import javax.sql.DataSource;
 
-/**
- * @author zhailiang
- *
- */
 @Configuration
 public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
 
