@@ -3,6 +3,7 @@ package com.imooc.security.app;
 import com.imooc.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.imooc.security.core.properties.SecurityConstants;
 import com.imooc.security.core.properties.SecurityProperties;
+import com.imooc.security.core.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,6 +28,9 @@ public class ImoocResourceServerConfig extends ResourceServerConfigurerAdapter {
     private AuthenticationFailureHandler authenticationFailureHandler;
 
     @Autowired
+    private ValidateCodeSecurityConfig validateCodeSecurityConfig;
+
+    @Autowired
     private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
 
     @Autowired
@@ -40,8 +44,8 @@ public class ImoocResourceServerConfig extends ResourceServerConfigurerAdapter {
         applyPasswordAuthenticationConfig(http);
 
         http
-//                .apply(validateCodeSecurityConfig)
-//                .and()
+                .apply(validateCodeSecurityConfig)
+                .and()
                 .apply(smsCodeAuthenticationSecurityConfig)
                     .and()
                 .apply(imoocSocialSecurityConfig)
