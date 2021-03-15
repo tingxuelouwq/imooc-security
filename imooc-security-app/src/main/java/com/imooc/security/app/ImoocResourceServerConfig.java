@@ -1,5 +1,6 @@
 package com.imooc.security.app;
 
+import com.imooc.security.app.social.openid.OpenIdAuthenticationSecurityConfig;
 import com.imooc.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.imooc.security.core.properties.SecurityConstants;
 import com.imooc.security.core.properties.SecurityProperties;
@@ -37,6 +38,9 @@ public class ImoocResourceServerConfig extends ResourceServerConfigurerAdapter {
     private SpringSocialConfigurer imoocSocialSecurityConfig;
 
     @Autowired
+    private OpenIdAuthenticationSecurityConfig openIdAuthenticationSecurityConfig;
+
+    @Autowired
     private SecurityProperties securityProperties;
 
     @Override
@@ -44,26 +48,28 @@ public class ImoocResourceServerConfig extends ResourceServerConfigurerAdapter {
         applyPasswordAuthenticationConfig(http);
 
         http
-                .apply(validateCodeSecurityConfig)
+            .apply(validateCodeSecurityConfig)
+            .and()
+            .apply(smsCodeAuthenticationSecurityConfig)
                 .and()
-                .apply(smsCodeAuthenticationSecurityConfig)
-                    .and()
-                .apply(imoocSocialSecurityConfig)
-                    .and()
-                .authorizeRequests()
-                    .antMatchers(
-                        SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
-                        securityProperties.getBrowser().getLoginPage(),
-                        SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
-                        securityProperties.getBrowser().getSignUpUrl(),
-                        securityProperties.getBrowser().getSession().getSessionInvalidUrl(),
-                        securityProperties.getBrowser().getSignOutUrl(),
-                        "/user/regist")
-                        .permitAll()
-                    .anyRequest()
-                    .authenticated()
-                    .and()
-                .csrf().disable();
+            .apply(imoocSocialSecurityConfig)
+                .and()
+            .apply(openIdAuthenticationSecurityConfig)
+                .and()
+            .authorizeRequests()
+                .antMatchers(
+                    SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
+                    securityProperties.getBrowser().getLoginPage(),
+                    SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
+                    securityProperties.getBrowser().getSignUpUrl(),
+                    securityProperties.getBrowser().getSession().getSessionInvalidUrl(),
+                    securityProperties.getBrowser().getSignOutUrl(),
+                    "/user/regist")
+                    .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+            .csrf().disable();
     }
 
     public void applyPasswordAuthenticationConfig(HttpSecurity http) throws Exception {
