@@ -41,8 +41,23 @@ imooc:
         app-id: wxd99431bbff8305a0
         app-secret: 60f78681d063590a469f1b297feff3c4
       filterProcessingUrl: /qqLogin
-security:
-  oauth2:
-    client:
-      client-id: imooc
-      client-secret: imoocsecret
+    oauth2:
+      clients:
+        - client-id: imooc
+          client-secret: imoocsecret
+          accessTokenValiditySeconds: 3600
+          authorizedGrantTypes: [refresh_token,password]
+          scopes: [all,read,write]
+        - client-id: test
+          client-secret: test
+          accessTokenValiditySeconds: 7200
+          authorizedGrantTypes: [refresh_token,password]
+          scopes: [all,read,write]
+
+
+
+#security:
+#  oauth2:
+#    client:
+#      client-id: imooc
+#      client-secret: imoocsecret
