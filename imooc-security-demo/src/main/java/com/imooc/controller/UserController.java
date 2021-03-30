@@ -3,7 +3,6 @@ package com.imooc.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.imooc.dto.User;
 import com.imooc.dto.UserQueryCondition;
-import com.imooc.security.app.social.AppSignUpUtils;
 import com.imooc.security.core.properties.SecurityProperties;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -16,10 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
-import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.ServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -39,22 +36,22 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private ProviderSignInUtils providerSignInUtils;
-
-    @Autowired
-    private AppSignUpUtils appSignUpUtils;
+//    @Autowired
+//    private ProviderSignInUtils providerSignInUtils;
+//
+//    @Autowired
+//    private AppSignUpUtils appSignUpUtils;
 
     @Autowired
     private SecurityProperties securityProperties;
 
-    @PostMapping("/regist")
-    public void regist(User user, HttpServletRequest request) {
-        // 不管是注册用户还是绑定用户，都会拿到一个用户唯一标识，这里以用户名作为userId
-        String userId = user.getUsername();
-//        providerSignInUtils.doPostSignUp(userId, new ServletWebRequest(request));
-        appSignUpUtils.doPostSignUp(new ServletWebRequest(request), userId);
-    }
+//    @PostMapping("/regist")
+//    public void regist(User user, HttpServletRequest request) {
+//        // 不管是注册用户还是绑定用户，都会拿到一个用户唯一标识，这里以用户名作为userId
+//        String userId = user.getUsername();
+////        providerSignInUtils.doPostSignUp(userId, new ServletWebRequest(request));
+//        appSignUpUtils.doPostSignUp(new ServletWebRequest(request), userId);
+//    }
 
     @GetMapping("/me")
     public Object getCurrentUser(Authentication authentication, HttpServletRequest request) throws UnsupportedEncodingException {
