@@ -2,13 +2,12 @@ package com.imooc.security.browser.config;
 
 import com.imooc.security.core.authentication.AbstractChannelSecurityConfig;
 import com.imooc.security.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
-import com.imooc.security.core.properties.SecurityConstants;
+import com.imooc.security.core.authorize.AuthorizeConfigManager;
 import com.imooc.security.core.properties.SecurityProperties;
 import com.imooc.security.core.validate.code.ValidateCodeSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
@@ -50,6 +49,9 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
     @Autowired
     private LogoutSuccessHandler logoutSuccessHandler;
 
+    @Autowired
+    private AuthorizeConfigManager authorizeConfigManager;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -78,21 +80,9 @@ public class BrowserSecurityConfig extends AbstractChannelSecurityConfig {
                 .logoutSuccessHandler(logoutSuccessHandler)
                 .deleteCookies("JSESSIONID")
                 .and()
-            .authorizeRequests()
-                .antMatchers(
-                    SecurityConstants.DEFAULT_UNAUTHENTICATION_URL,
-                    securityProperties.getBrowser().getLoginPage(),
-                    SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*",
-                    securityProperties.getBrowser().getSignUpUrl(),
-                    securityProperties.getBrowser().getSession().getSessionInvalidUrl(),
-                    securityProperties.getBrowser().getSignOutUrl(),
-                    "/user/regist")
-                    .permitAll()
-                .antMatchers(HttpMethod.GET, "/user/*").hasAnyRole("ADMIN")
-                .anyRequest()
-                .authenticated()
-                .and()
             .csrf().disable();
+
+        authorizeConfigManager.config(http.authorizeRequests());
     }
 
     @Bean
